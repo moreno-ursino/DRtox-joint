@@ -1,0 +1,73 @@
+<DATAFILE>
+
+[FILEINFO]
+file = '../../data_PKPD.txt'
+delimiter = tab
+header = {ID, TIME, DV, DVID, AMT, TINF}
+
+[CONTENT]
+ID = {use=identifier}
+TIME = {use=time}
+DV = {use=observation, name={y_1, y_2}, yname={'1', '2'}, type={continuous, continuous}}
+DVID = {use=observationtype}
+AMT = {use=amount}
+TINF = {use=infusiontime}
+
+<MODEL>
+
+[INDIVIDUAL]
+input = {Cl_pop, V_pop, Emax_pop, H_pop, kdeg_pop, K_pop, omega_Cl, omega_Emax, omega_kdeg, omega_K}
+
+DEFINITION:
+Cl = {distribution=logNormal, typical=Cl_pop, sd=omega_Cl}
+V = {distribution=logNormal, typical=V_pop, no-variability}
+Emax = {distribution=logNormal, typical=Emax_pop, sd=omega_Emax}
+H = {distribution=logNormal, typical=H_pop, no-variability}
+kdeg = {distribution=logNormal, typical=kdeg_pop, sd=omega_kdeg}
+K = {distribution=logNormal, typical=K_pop, sd=omega_K}
+
+[LONGITUDINAL]
+input = {b1, b2}
+
+file = '../../model.txt'
+
+DEFINITION:
+y1 = {distribution=normal, prediction=Cc, errorModel=proportional(b1)}
+y2 = {distribution=normal, prediction=R, errorModel=proportional(b2)}
+
+<FIT>
+data = {y_1, y_2}
+model = {y1, y2}
+
+<PARAMETER>
+Cl_pop = {value=1, method=MLE}
+Emax_pop = {value=100000, method=MLE}
+H_pop = {value=1, method=MLE}
+K_pop = {value=2, method=MLE}
+V_pop = {value=4, method=MLE}
+b1 = {value=0.3, method=MLE}
+b2 = {value=0.3, method=MLE}
+kdeg_pop = {value=0.5, method=MLE}
+omega_Cl = {value=1, method=MLE}
+omega_Emax = {value=1, method=MLE}
+omega_K = {value=1, method=MLE}
+omega_kdeg = {value=1, method=MLE}
+
+<MONOLIX>
+
+[TASKS]
+populationParameters()
+individualParameters(method = conditionalMode)
+fim(method = StochasticApproximation)
+logLikelihood(run = false,method = ImportanceSampling)
+plotResult(run = false,method = none )
+
+[SETTINGS]
+GLOBAL:
+exportpath = '../'
+
+POPULATION:
+smoothingiterations = 20
+exploratoryiterations = 50
+simulatedannealingiterations = 50
+

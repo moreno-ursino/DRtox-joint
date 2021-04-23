@@ -1,0 +1,16 @@
+DESCRIPTION: PK infusion + PD Chen
+
+input =  {V, Cl ,Emax, H, kdeg, K}
+    
+EQUATION:
+Cc = pkmodel(V, Cl)
+EC50=10000
+Imax=0.995
+IC50=18200
+AUC_0=0
+R_0 = 0
+ddt_AUC=R
+ddt_R = Emax*Cc^H/(EC50^H+Cc^H)*(1-Imax*AUC/(IC50/K^(7-1)+AUC))-kdeg*R
+    
+OUTPUT:
+output = {Cc, R}

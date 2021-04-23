@@ -1,0 +1,32 @@
+********************************************************************************
+*                          model_mlxtran.mlxtran                               *
+*                          April 18, 2021 at 13:01:03                          *
+*                          Monolix version : 5.1.0                             *
+********************************************************************************
+
+
+POPULATION PARAMETERS ESTIMATION _______________________________________________
+
+Fixed Effects ----------------------------
+V_pop                          :      3.95
+Cl_pop                         :      1.59
+Emax_pop                       :   4.35e+5
+H_pop                          :      0.94
+kdeg_pop                       :     0.179
+K_pop                          :      2.58
+
+Standard Deviation of the Random Effects -
+omega_Cl                       :     0.434
+omega_Emax                     :     0.278
+omega_kdeg                     :     0.115
+omega_K                        :     0.302
+
+Error Model Parameters -------------------
+b1                             :     0.166
+
+b2                             :     0.147
+
+Elapsed time (seconds) :   4.5e+2
+
+ _______________________________________________________________________________
+
